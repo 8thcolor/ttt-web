@@ -1,7 +1,15 @@
 <p id="notice"><%= notice %></p>
 
+<% if @game.finish? %>
+  <% if @saved_game.lost? %>
+    <h1> You lost game <%= @saved_game.id %>!</h1>
+  <% else %>
+  <h1> You won game <%= @saved_game.id %>!</h1>
+  <% end %>
+<% else %>
 <h1> Game <%= @saved_game.id %></h1>
+<% end %>
 
 <%= render 'game' %>
 
-<%= link_to 'Back', saved_games_path %>
+<%= link_to 'Back', saved_games_path %> | <%= link_to 'New game', new_saved_game_path %>
