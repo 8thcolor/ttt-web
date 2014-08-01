@@ -4,6 +4,6 @@ class SavedGame < ActiveRecord::Base
   end
 
   def game
-    Game::load(data)
+    @game ||= Game::load(data)
   end
 end

@@ -13,17 +13,11 @@ class ApiGamesController < ApplicationController
   def show
   end
 
-  def win
-  end
-
-  def lose
-  end
-
   def play
     @saved_game.game.place(params[:x].to_i, params[:y].to_i)
     
     unless @saved_game.game.finish?
-      player = Player.new(@game, 1)
+      player = Player.new(@saved_game.game, 1)
       player.play
     end
 
@@ -37,7 +31,7 @@ class ApiGamesController < ApplicationController
 
     @saved_game.save
 
-    render action: 'show', json: @saved_game, status: :created, location: @saved_game
+    render action: 'show', status: :created, location: @saved_game
   end
 
   # POST /saved_games
@@ -52,7 +46,7 @@ class ApiGamesController < ApplicationController
     @saved_game.data = game.save
     @saved_game.save
 
-    render action: 'show', json: @saved_game, status: :created, location: @saved_game
+    render action: 'show', status: :created, location: @saved_game
   end
 
   # DELETE /saved_games/1
