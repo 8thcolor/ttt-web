@@ -39,11 +39,13 @@ class SavedGamesController < ApplicationController
     @saved_game.data = game.save
     @saved_game.save
 
+    id = @saved_game.id
+
     message = Mail.new do
       from            'martin.vanaken@8thcolor.com'
       to              'vanakenm@gmail.com'
-      subject         "TTT Game #{@saved_game.id} has started!"
-      body            "TTT Game #{@saved_game.id} has started!"
+      subject         "TTT Game #{id} has started!"
+      body            "TTT Game #{id} has started!"
 
       delivery_method Mail::Postmark, :api_key => ENV['POSTMARK_API_KEY']
     end
