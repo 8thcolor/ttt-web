@@ -35,9 +35,20 @@ class SavedGamesController < ApplicationController
     game = Game.new(1)
     player = Player.new(game, 1)
     player.play
-    
+
     @saved_game.data = game.save
     @saved_game.save
+
+    message = Mail.new do
+      from            'martin.vanaken@8thcolor.com'
+      to              'vanakenm@gmail.com'
+      subject         "TTT Game #{@saved_game.id} has started!"
+      body            "TTT Game #{@saved_game.id} has started!"
+
+      delivery_method Mail::Postmark, :api_key => ENV['POSTMARK_API_KEY']
+    end
+
+    message.deliver
 
     redirect_to @saved_game, notice: 'Saved game was successfully created.'
   end
