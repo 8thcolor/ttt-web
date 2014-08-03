@@ -5,9 +5,6 @@ class MailGamesController < ApplicationController
     @saved_games = SavedGame.all
   end
 
-  def show
-  end
-
   def play
     message = JSON.parse(request.body.read)
     title = message["Subject"]

@@ -1,15 +1,12 @@
 class ApiGamesController < ApplicationController
   skip_before_filter :verify_authenticity_token
 
-  before_action :set_saved_game, only: [:win, :lose, :play, :show, :edit, :update, :destroy]
+  before_action :set_saved_game, only: [:play, :show, :destroy]
 
-  # GET /api_games.json
   def index
     @saved_games = SavedGame.all
   end
 
-  # GET /saved_games/1
-  # GET /saved_games/1.json
   def show
   end
 
@@ -47,16 +44,6 @@ class ApiGamesController < ApplicationController
     @saved_game.save
 
     render action: 'show', status: :created, location: @saved_game
-  end
-
-  # DELETE /saved_games/1
-  # DELETE /saved_games/1.json
-  def destroy
-    @saved_game.destroy
-    respond_to do |format|
-      format.html { redirect_to saved_games_url }
-      format.json { head :no_content }
-    end
   end
 
   private

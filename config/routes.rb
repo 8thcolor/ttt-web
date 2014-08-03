@@ -16,4 +16,6 @@ TttWeb::Application.routes.draw do
       post 'play'
     end
   end
+
+  root 'home#index'
 end
