@@ -12,7 +12,7 @@ TttWeb::Application.routes.draw do
   end
 
   resources :mail_games do
-    member do
+    collection do
       post 'play'
     end
   end
