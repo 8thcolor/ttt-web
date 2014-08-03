@@ -38,7 +38,7 @@ class MailGamesController < ApplicationController
     @saved_game.save
 
     status = @saved_game.status
-    body_contents = "TTTGame-#{id} is #{status} - your move!\n Grid: #{@saved_game.data}\n Play by replying to this mail."
+    body_contents = "TTTGame-#{id} is #{status} - your move!\n Grid: \n #{@saved_game.grid_s}\n Play by replying to this mail."
     
     message = Mail.new do
       from            'martin.vanaken@8thcolor.com'
@@ -66,7 +66,7 @@ class MailGamesController < ApplicationController
     @saved_game.save
 
     id = @saved_game.id
-    body_contents = "TTTGame-#{id} has just started - your move!\n Grid: #{game.save}\n Play by replying to this mail."
+    body_contents = "TTTGame-#{id} has just started - your move!\n Grid: \n #{@saved_game.grid_s}\n Play by replying to this mail."
 
     message = Mail.new do
       from            'martin.vanaken@8thcolor.com'

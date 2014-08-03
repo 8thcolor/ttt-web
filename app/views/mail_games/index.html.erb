@@ -1,9 +1,13 @@
 <h1>Listing mail games</h1>
 
+<%= link_to 'New game', new_mail_game_path %>
+
 <table>
   <thead>
     <tr>
-      <th>Data</th>
+      <th>id</th>
+      <th>status</th>
+      <th>grid</th>
       <th></th>
     </tr>
   </thead>
@@ -11,12 +15,12 @@
   <tbody>
     <% @saved_games.each do |saved_game| %>
       <tr>
-        <td><%= saved_game.data %></td>
+        <td><%= saved_game.id %></td>
+        <td><%= saved_game.status %></td>
+        <td><pre><%= saved_game.grid_s %></pre></td>
+        <td><%= link_to 'Show', saved_game %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
-<br>
-
-<%= link_to 'New game', new_mail_game_path %>
