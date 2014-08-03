@@ -1,4 +1,6 @@
 class MailGamesController < ApplicationController
+  skip_before_filter :verify_authenticity_token
+  
   def index
     @saved_games = SavedGame.all
   end
@@ -31,7 +33,7 @@ class MailGamesController < ApplicationController
     
     if @game.winner == -1
       @saved_game.status = 'won'
-      
+
     elsif @game.winner == 1
       @saved_game.status = 'lost'
     end
