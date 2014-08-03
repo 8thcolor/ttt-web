@@ -10,4 +10,12 @@ TttWeb::Application.routes.draw do
       post 'play'
     end
   end
+
+  resources :mail_games do
+    collection do
+      post 'play'
+    end
+  end
+
+  root 'home#index'
 end

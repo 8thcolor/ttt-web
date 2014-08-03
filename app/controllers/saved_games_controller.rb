@@ -35,7 +35,7 @@ class SavedGamesController < ApplicationController
     game = Game.new(1)
     player = Player.new(game, 1)
     player.play
-    
+
     @saved_game.data = game.save
     @saved_game.save
 

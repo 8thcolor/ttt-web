@@ -1,0 +1,22 @@
+<h1>Listing mail games</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Data</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @saved_games.each do |saved_game| %>
+      <tr>
+        <td><%= saved_game.data %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New game', new_mail_game_path %>
