@@ -1,4 +1,4 @@
-class SavedGamesController < ApplicationController
+class MailGamesController < ApplicationController
   before_action :set_saved_game, only: [:play, :show, :destroy]
 
   def index
@@ -39,7 +39,21 @@ class SavedGamesController < ApplicationController
     @saved_game.data = game.save
     @saved_game.save
 
-    redirect_to @saved_game, notice: 'Saved game was successfully created.'
+    id = @saved_game.id
+    body_contents = "TTT Game #{id} has just started - your move!\n Grid: #{game.save}\n Play by replying to this mail."
+
+    message = Mail.new do
+      from            'martin.vanaken@8thcolor.com'
+      to              'vanakenm@gmail.com'
+      subject         "TTT Game #{id} has started!"
+      body            body_contents
+
+      delivery_method Mail::Postmark, :api_key => ENV['POSTMARK_API_KEY']
+    end
+
+    message.deliver
+
+    redirect_to action: 'index', notice: 'Game started !'
   end
 
   def destroy

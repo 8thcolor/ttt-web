@@ -10,4 +10,10 @@ TttWeb::Application.routes.draw do
       post 'play'
     end
   end
+
+  resources :mail_games do
+    member do
+      post 'play'
+    end
+  end
 end
