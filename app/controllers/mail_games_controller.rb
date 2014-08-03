@@ -54,6 +54,8 @@ class MailGamesController < ApplicationController
     end
 
     message.deliver
+
+    render status: 200
   end
 
   def new
