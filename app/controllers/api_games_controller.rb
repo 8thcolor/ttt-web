@@ -1,32 +1,21 @@
 class ApiGamesController < ApplicationController
   skip_before_filter :verify_authenticity_token
 
-  before_action :set_saved_game, only: [:play, :show, :destroy]
-
   def index
     @saved_games = SavedGame.all
   end
 
   def show
+    @saved_game = SavedGame.find(params[:id])
   end
 
   def play
-    @saved_game.game.place(params[:x].to_i, params[:y].to_i)
-    
-    unless @saved_game.game.finish?
-      player = Player.new(@saved_game.game, 1)
-      player.play
-    end
+    @saved_game = SavedGame.find(params[:id])
 
-    @saved_game.data = @saved_game.game.save
-    
-    if @saved_game.game.winner == -1
-      @saved_game.status = 'won'
-    elsif @saved_game.game.winner == 1
-      @saved_game.status = 'lost'
-    end
+    x = params[:x].to_i
+    y = params[:y].to_i
 
-    @saved_game.save
+    @saved_game.play_turn(x, y)
 
     render action: 'show', status: :created, location: @saved_game
   end
@@ -47,10 +36,6 @@ class ApiGamesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_saved_game
-      @saved_game = SavedGame.find(params[:id])
-    end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def saved_game_params

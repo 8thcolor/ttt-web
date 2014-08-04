@@ -3,6 +3,26 @@ class SavedGame < ActiveRecord::Base
     status == 'lost'
   end
 
+  def play_turn(x, y)
+    game.place(x, y)
+    
+    unless game.finish?
+      player = Player.new(game, 1)
+      player.play
+    end
+
+    self.data = game.save
+    
+    if game.winner == -1
+      self.status = 'won'
+    elsif game.winner == 1
+      self.status = 'lost'
+    end
+
+    save
+
+  end
+
   def game
     @game ||= Game::load(data)
   end

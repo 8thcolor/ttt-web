@@ -12,30 +12,12 @@ class MailGamesController < ApplicationController
 
     id = /TTTGame-(\d+)\s/.match(title)[1].to_i
 
-    @saved_game = SavedGame.find(id)
-    @game = Game::load(@saved_game.data)
-
     first_line = body.lines.first
-    x = first_line[0]
-    y = first_line[2]
+    x = first_line[0].to_i
+    y = first_line[2].to_i
 
-    @game.place(x.to_i, y.to_i)
-    
-    unless @game.finish?
-      player = Player.new(@game, 1)
-      player.play
-    end
-
-    @saved_game.data = @game.save
-    
-    if @game.winner == -1
-      @saved_game.status = 'won'
-
-    elsif @game.winner == 1
-      @saved_game.status = 'lost'
-    end
-
-    @saved_game.save
+    @saved_game = SavedGame.find(id)
+    @saved_game.play_turn(x, y)
 
     status = @saved_game.status
     body_contents = "TTTGame-#{id} is #{status} - your move!\n Grid: \n #{@saved_game.grid_s}\n Play by replying to this mail."
@@ -58,6 +40,7 @@ class MailGamesController < ApplicationController
   def new
     @saved_game = SavedGame.new
     @saved_game.status = 'ongoing'
+    
     game = Game.new(1)
     player = Player.new(game, 1)
     player.play

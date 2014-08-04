@@ -1,31 +1,21 @@
 class SavedGamesController < ApplicationController
-  before_action :set_saved_game, only: [:play, :show, :destroy]
 
   def index
     @saved_games = SavedGame.all
   end
 
   def show
+    @saved_game = SavedGame.find(params[:id])
   end
 
   def play
-    @game.place(params[:x].to_i, params[:y].to_i)
+    @saved_game = SavedGame.find(params[:id])
+
+    x = params[:x].to_i
+    y = params[:y].to_i
+
+    @saved_game.play_turn(x,y)
     
-    unless @game.finish?
-      player = Player.new(@game, 1)
-      player.play
-    end
-
-    @saved_game.data = @game.save
-    
-    if @game.winner == -1
-      @saved_game.status = 'won'
-    elsif @game.winner == 1
-      @saved_game.status = 'lost'
-    end
-
-    @saved_game.save
-
     redirect_to action: 'show'
   end
 
@@ -43,16 +33,12 @@ class SavedGamesController < ApplicationController
   end
 
   def destroy
+    @saved_game = SavedGame.find(params[:id])
     @saved_game.destroy
     redirect_to saved_games_url
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_saved_game
-      @saved_game = SavedGame.find(params[:id])
-      @game = Game::load(@saved_game.data)
-    end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def saved_game_params

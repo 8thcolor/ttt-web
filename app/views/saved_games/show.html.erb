@@ -1,6 +1,6 @@
 <p id="notice"><%= notice %></p>
 
-<% if @game.finish? %>
+<% if @saved_game.game.finish? %>
   <% if @saved_game.lost? %>
     <h1> You lost game <%= @saved_game.id %>!</h1>
   <% else %>
