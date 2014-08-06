@@ -23,9 +23,9 @@ class MailGamesController < ApplicationController
     body_contents = "TTTGame-#{id} is #{status} - your move!\n Grid: \n #{@saved_game.grid_s}\n Play by replying to this mail."
     
     message = Mail.new do
-      from            'martin.vanaken@8thcolor.com'
-      reply_to        "6d2ae99a2eb04e1b420df399c0f60e98@inbound.postmarkapp.com"
-      to              'vanakenm@gmail.com'
+      from            'you.from@mail.com'
+      reply_to        "postmarkinbound@inbound.postmarkapp.com"
+      to              'you.to@mail.com'
       subject         "TTTGame-#{id} is #{status}!"
       body            body_contents
 
@@ -52,9 +52,9 @@ class MailGamesController < ApplicationController
     body_contents = "TTTGame-#{id} has just started - your move!\n Grid: \n #{@saved_game.grid_s}\n Play by replying to this mail."
 
     message = Mail.new do
-      from            'martin.vanaken@8thcolor.com'
-      reply_to        "6d2ae99a2eb04e1b420df399c0f60e98@inbound.postmarkapp.com"
-      to              'vanakenm@gmail.com'
+      from            'you.from@mail.com'
+      reply_to        "postmarkinbound@inbound.postmarkapp.com"
+      to              'you.to@mail.com'
       subject         "TTTGame-#{id} has started!"
       body            body_contents
 
