@@ -1,0 +1,5 @@
+---
+rules:
+  ignore:
+  - extra_blank_line_detected_at_body_end
+  - missing_method_documentation
